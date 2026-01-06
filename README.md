@@ -58,7 +58,7 @@ Definidas en `src/main/resources/application.properties`:
      -d '{"name":"Juan","email":"juan@mail.com","message":"Hola desde el portfolio"}'
    ```
 
-## Endpoints principales
+## Endpoint principal
 
 - `POST /api/contact`
   - **Body**: `name`, `email`, `message`.
@@ -71,14 +71,3 @@ Definidas en `src/main/resources/application.properties`:
   - `email` con formato válido (`@Email`).
   - tamaños máximos definidos (`@Size`).
 - `ApiExceptionHandler` devuelve `400` con un listado de errores por campo cuando la validación falla.
-
-## Posibles mejoras futuras
-
-- Persistir mensajes en base de datos para auditoría.
-- Agregar rate limiting o captcha para evitar spam.
-- Incorporar logging estructurado y métricas de envío.
-- Añadir plantillas HTML y pruebas de integración con Resend.
-
-## Autor / Portfolio
-
-Proyecto desarrollado para el portfolio profesional de **Jimena**.
