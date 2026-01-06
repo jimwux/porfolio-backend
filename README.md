@@ -4,10 +4,10 @@ Backend en **Java + Spring Boot** pensado para un portfolio profesional. Expone 
 
 ## Tecnologías utilizadas
 
-- Java 17
-- Spring Boot 4 (WebMVC, WebFlux/WebClient, Validation, Actuator)
-- Maven
-- Resend API (envío de emails)
+- **Java 17**
+- **Spring Boot 4** (WebMVC, WebFlux/WebClient, Validation, Actuator)
+- **Maven**
+- **Resend API** (envío de emails)
 
 ## Arquitectura del proyecto
 
@@ -71,3 +71,8 @@ Definidas en `src/main/resources/application.properties`:
   - `email` con formato válido (`@Email`).
   - tamaños máximos definidos (`@Size`).
 - `ApiExceptionHandler` devuelve `400` con un listado de errores por campo cuando la validación falla.
+
+## Autor / Contacto
+**Jimena Gómez Wusinowski**  
+GitHub: https://github.com/jimwux/  
+LinkedIn: https://www.linkedin.com/in/jimenagomezwusinowski/
