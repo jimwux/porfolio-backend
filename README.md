@@ -73,6 +73,6 @@ Definidas en `src/main/resources/application.properties`:
 - `ApiExceptionHandler` devuelve `400` con un listado de errores por campo cuando la validación falla.
 
 ## Autor / Contacto
-**Jimena Gómez Wusinowski**  
+**Jimena Rocio Gomez Wusinowski**  
 GitHub: https://github.com/jimwux/  
 LinkedIn: https://www.linkedin.com/in/jimenagomezwusinowski/
