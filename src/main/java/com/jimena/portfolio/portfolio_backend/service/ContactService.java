@@ -3,13 +3,19 @@ package com.jimena.portfolio.portfolio_backend.service;
 import com.jimena.portfolio.portfolio_backend.dto.ContactRequest;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.http.MediaType;
+import org.springframework.scheduling.annotation.Async;
 import org.springframework.stereotype.Service;
 import org.springframework.web.reactive.function.client.WebClient;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
+import java.time.Duration;
 import java.util.Map;
+import java.util.concurrent.CompletableFuture;
 
 @Service
 public class ContactService {
+    private static final Logger log = LoggerFactory.getLogger(ContactService.class);
 
     private final WebClient webClient;
 
@@ -17,7 +23,7 @@ public class ContactService {
     private String to;
 
     @Value("${app.mail.from}")
-    private String from; // ej: "Portfolio <onboarding@resend.dev>" al principio
+    private String from;
 
     @Value("${app.mail.subject-prefix}")
     private String subjectPrefix;
@@ -35,7 +41,8 @@ public class ContactService {
                 .build();
     }
 
-    public void sendContactEmail(ContactRequest req) {
+    @Async("mailExecutor")
+    public CompletableFuture<Void> sendContactEmail(ContactRequest req) {
 
         String text = """
         Nuevo mensaje desde tu Portfolio:
@@ -55,7 +62,7 @@ public class ContactService {
                 "reply_to", req.email()
         );
 
-        webClient.post()
+        return webClient.post()
                 .uri("/emails")
                 .contentType(MediaType.APPLICATION_JSON)
                 .bodyValue(payload)
@@ -65,7 +72,11 @@ public class ContactService {
                                 .map(body -> new RuntimeException("Error enviando mail: " + body))
                 )
                 .toBodilessEntity()
-                .block();
+                .then()
+                .timeout(Duration.ofSeconds(8))
+                .doOnSuccess(ignored -> log.info("Correo enviado correctamente para {}", req.email()))
+                .doOnError(err -> log.error("Error enviando mail de contacto", err))
+                .toFuture();
 
     }
 }
